@@ -43,6 +43,7 @@
     "react-table": "7.7.0",
     "stylis": "4.0.13",
     "stylis-plugin-rtl": "2.1.1",
+    "util": "^0.12.5",
     "web-vitals": "2.1.4",
     "yup": "0.32.11"
   },
@@ -67,6 +68,7 @@
   },
   "devDependencies": {
     "jsonreactor": "^1.0.1",
-    "prettier": "2.5.1"
+    "prettier": "2.5.1",
+    "webpack-dev-server": "^4.15.1"
   }
 }
