@@ -2,12 +2,12 @@
 <p align="center"><i>ReactJS Frontend for Polaris AI Chat API</i></p>
 
 <div align="center">
-  <a href="https://github.com/Tech-Tweakers/polaris-frontend/stargazers"><img src="https://img.shields.io/github/stars/andreh1982/ecaterminal" alt="Stars Badge"/></a>
-<a href="https://github.com/Tech-Tweakers/polaris-frontend/network/members"><img src="https://img.shields.io/github/forks/andreh1982/ecaterminal" alt="Forks Badge"/></a>
-<a href="https://github.com/Tech-Tweakers/polaris-frontend/pulls"><img src="https://img.shields.io/github/issues-pr/andreh1982/ecaterminal" alt="Pull Requests Badge"/></a>
-<a href="https://github.com/Tech-Tweakers/polaris-frontend/issues"><img src="https://img.shields.io/github/issues/andreh1982/ecaterminal" alt="Issues Badge"/></a>
-<a href="https://github.com/Tech-Tweakers/polaris-frontend/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/andreh1982/ecaterminal?color=2b9348"></a>
-<a href="https://github.com/Tech-Tweakers/polaris-frontend/blob/master/LICENSE"><img src="https://img.shields.io/github/license/andreh1982/ecaterminal?color=2b9348" alt="License Badge"/></a>
+  <a href="https://github.com/Tech-Tweakers/polaris-frontend/stargazers"><img src="https://img.shields.io/github/stars/Tech-Tweakers/polaris-frontend" alt="Stars Badge"/></a>
+<a href="https://github.com/Tech-Tweakers/polaris-frontend/network/members"><img src="https://img.shields.io/github/forks/Tech-Tweakers/polaris-frontend" alt="Forks Badge"/></a>
+<a href="https://github.com/Tech-Tweakers/polaris-frontend/pulls"><img src="https://img.shields.io/github/issues-pr/Tech-Tweakers/polaris-frontend" alt="Pull Requests Badge"/></a>
+<a href="https://github.com/Tech-Tweakers/polaris-frontend/issues"><img src="https://img.shields.io/github/issues/Tech-Tweakers/polaris-frontend" alt="Issues Badge"/></a>
+<a href="https://github.com/Tech-Tweakers/polaris-frontend/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Tech-Tweakers/polaris-frontend?color=2b9348"></a>
+<a href="https://github.com/Tech-Tweakers/polaris-frontend/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Tech-Tweakers/polaris-frontend?color=2b9348" alt="License Badge"/></a>
 </div>
 
 <br>
