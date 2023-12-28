@@ -1,4 +1,4 @@
-<h1 align="center">Tech Tweakers - Polaris Chat Frontend v0.0.1 </h1>
+<h1 align="center">Tech Tweakers - Polaris Chat Frontend v1 </h1>
 <p align="center"><i>ReactJS Frontend for Polaris AI Chat API</i></p>
 
 <div align="center">
