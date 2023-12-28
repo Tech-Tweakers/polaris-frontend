@@ -29,7 +29,7 @@ After that, follow the steps below:
 
 ```bash
 # Clone this repository:
-git clone https://github.com/Tech-Tweakers/polaris-frontend.git --recurse-submodules
+git clone https://github.com/Tech-Tweakers/polaris-frontend.git
 
 # Enter in the folder:
 cd polaris-frontend
