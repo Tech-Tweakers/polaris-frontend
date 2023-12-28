@@ -1,14 +1,10 @@
 import React from "react"; // Importe o React
-import ChatUI from "layouts/chatui";
-import Icon from "@mui/material/Icon";
+import ChatUI from "chatui";
 
 const routes = [
     {
-        type: "collapse",
-        name: "Chat UI",
         key: "chatui",
-        icon: <Icon fontSize="small">messages</Icon>,
-        route: "/chatui",
+        route: "/",
         component: <ChatUI />,
     },
 ];

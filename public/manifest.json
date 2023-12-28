@@ -1,9 +1,9 @@
 {
-  "short_name": "AI ChatUI",
-  "name": "Tech Tweakers AI ChatUI",
+  "short_name": "Polaris ChatUI",
+  "name": "Polaris AI Chat Interface",
   "icons": [
     {
-      "src": "favicon.png",
+      "src": "logo.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/png"
     }
