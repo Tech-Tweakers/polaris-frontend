@@ -24,6 +24,7 @@ This project is old and its using NPM version v16.18.1. If you are using NVM, yo
 ```bash
 nvm install 16.14.4
 ```
+After that, follow the steps below:
 
 ```bash
 # Clone this repository:
