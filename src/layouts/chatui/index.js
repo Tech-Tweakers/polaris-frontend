@@ -23,6 +23,8 @@ function ChatUI() {
     const [inputDisabled, setInputDisabled] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
 
+    const chatContainerRef = React.useRef(null);
+
     const handleSend = async () => {
         if (input.trim() !== "") {
             setInputDisabled(true);
@@ -97,6 +99,13 @@ function ChatUI() {
         }
     };
 
+    React.useEffect(() => {
+        const chatContainer = chatContainerRef.current;
+        if (chatContainer) {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    }, [messages]);
+
     const handleInputChange = (event) => {
         setInput(event.target.value);
     };
@@ -116,7 +125,10 @@ function ChatUI() {
                     >
                         <Typography variant="h5">AI Chat Interface</Typography>
                         <Divider />
-                        <Box sx={{ flexGrow: 1, overflow: "auto", p: 1 }}>
+                        <Box
+                            ref={chatContainerRef}
+                            sx={{ flexGrow: 1, overflow: "auto", p: 1 }}
+                        >
                             {messages.map((message) => (
                                 <Message key={message.id} message={message} />
                             ))}
