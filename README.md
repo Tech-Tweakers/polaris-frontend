@@ -22,7 +22,7 @@ This project is a simple ReactJS frontend using MaterialUI to consume the Polari
 This project is old and its using NPM version v16.18.1. If you are using NVM, you can install it using the following command:
 
 ```bash
-nvm install 16.14.4
+nvm install 16
 ```
 After that, follow the steps below:
 
