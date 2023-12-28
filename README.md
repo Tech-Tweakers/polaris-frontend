@@ -11,7 +11,7 @@
 </div>
 
 <br>
-<p align="center"><i>Have some time to help? Please open an <a href="https://github.com/Tech-Tweakers/polaris-frontend/issues/new">Issue</a> to say hello!</i></p>
+<p align="center"><i>Have some problem or a free time to help? Please open an <a href="https://github.com/Tech-Tweakers/polaris-frontend/issues/new">Issue</a> to tell us!</i></p>
 
 ## About
 
@@ -41,6 +41,8 @@ npm update --force
 npm start
 ```
 
-## Credits
+## Credits / Contributors
+
+- **Vitor Ramos** - https://github.com/vitorr7df
 
 In memoriam of **Anderson Roberto** - https://github.com/EuAndersonRoberto 
