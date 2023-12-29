@@ -15,7 +15,9 @@
 
 ## About
 
-This project is a simple ReactJS frontend using MaterialUI to consume the Polaris AI Chat API. Link to the API: https://github.com/Tech-Tweakers/polaris-chatbot
+This project is a simple ReactJS frontend using MaterialUI to consume the Polaris AI Chat API. 
+
+API Repository: https://github.com/Tech-Tweakers/polaris-chatbot :star:
 
 ## Install
 
