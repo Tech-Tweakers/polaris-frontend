@@ -23,7 +23,7 @@ let r = (Math.random() + 1).toString(36).substring(7);
 function ChatUI() {
     const [input, setInput] = React.useState("");
     const [messages, setMessages] = React.useState([
-        { id: 1, text: "Hello! How can I help you? 😊", sender: "bot", timestamp: new Date() },
+        { id: 1, text: "Hello, how can I help you today? 😊", sender: "bot", timestamp: new Date() },
     ]);
     const [inputDisabled, setInputDisabled] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
@@ -48,8 +48,7 @@ function ChatUI() {
     const handleSend = async () => {
         if (input.trim() !== "") {
             setInputDisabled(true);
-
-
+    
             setMessages([
                 ...messages,
                 {
@@ -59,36 +58,45 @@ function ChatUI() {
                     timestamp: new Date(),
                 },
             ]);
-
+    
             const newMessage = {
                 id: messages.length + 1,
                 text: input,
                 sender: "user",
                 timestamp: new Date(),
             };
-
+    
             try {
                 setLoading(true);
-
-                const response = await axios.post("https://sure-cheaply-kite.ngrok-free.app/entries/", [
+    
+                const endpoint =
+                    activeEndpoint === "chat"
+                        ? "https://localhost:9001/chat/send"
+                        : "https://localhost:9001/code/send";
+    
+                const response = await axios.post(
+                    endpoint,
+                    [
+                        {
+                            role: "user:",
+                            content: input,
+                            chatID: r,
+                        },
+                    ],
                     {
-                        role: "user:",
-                        content: input,
-                        chatID: r,
-                    },
-                ], {
-                    headers: {
-                        "content-type": "application/json",
-                        "Access-Control-Allow-Credentials": "true",
-                        "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
-                        "Access-Control-Allow-Origin": "*",
-                        "Access-Control-Allow-Headers": "*",
-                    },
-                });
+                        headers: {
+                            "content-type": "application/json",
+                            "Access-Control-Allow-Credentials": "true",
+                            "Access-Control-Allow-Methods":
+                            "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+                            "Access-Control-Allow-Origin": "*",
+                            "Access-Control-Allow-Headers": "*",
+                        },
+                    }
+                );
                 const botResponse = response.data.content;
                 let isCode = /[{[\s]/.test(botResponse);
-
-
+    
                 setMessages([
                     ...messages,
                     newMessage,
@@ -107,9 +115,10 @@ function ChatUI() {
                     ...messages,
                     {
                         id: messages.length + 1,
-                        text: "Error: Could not connect to the backend: " + error,
+                        text:
+                            "Error: Could not connect to the backend: " + error,
                         sender: "bot",
-                        timestamp: new Date()
+                        timestamp: new Date(),
                     },
                 ]);
             } finally {
@@ -118,7 +127,7 @@ function ChatUI() {
             }
         }
     };
-
+    
     const handleSwitchEndpoint = (endpoint) => {
         if (endpoint !== activeEndpoint) {
             setConfirmationDialogOpen(true);
@@ -130,17 +139,15 @@ function ChatUI() {
         setActiveEndpoint((prevEndpoint) => {
             const newEndpoint = prevEndpoint === "chat" ? "code" : "chat";
             setMessages([
-                ...messages,
                 {
-                    id: messages.length + 1,
-                    text: newEndpoint === "chat" ? "Hello! How can I help you? 😊" : "Hello, I'm ready to code! 🤖",
-                    sender: "bot",
-                    timestamp: new Date(),
+                id: 1,
+                text: newEndpoint === "chat" ? "Hello, how can I help you today? 😊" : "Hello, I'm ready to code! What do you need? 🤖",
+                sender: "bot",
+                timestamp: new Date(),
                 },
             ]);
-            return newEndpoint;
+        return newEndpoint;
         });
-        setMessages([]);
     };
 
     const handleCancelSwitch = () => {
