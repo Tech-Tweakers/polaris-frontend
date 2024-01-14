@@ -6,29 +6,49 @@ import {
     Grid,
     Paper,
     CircularProgress,
+    Button,
 } from "@mui/material";
 import axios from "axios";
 import Card from "@mui/material/Card";
 import InputAdornment from "@mui/material/InputAdornment";
 import Icon from "@mui/material/Icon";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
 
 let r = (Math.random() + 1).toString(36).substring(7);
 
 function ChatUI() {
     const [input, setInput] = React.useState("");
     const [messages, setMessages] = React.useState([
-        { id: 1, text: "Hello! How can I help you? 😊", sender: "bot", timestamp: new Date() },
+        { id: 1, text: "Hello, how can I help you today? 😊", sender: "bot", timestamp: new Date() },
     ]);
     const [inputDisabled, setInputDisabled] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
+    const [activeEndpoint, setActiveEndpoint] = React.useState("chat"); // Default to "chat"
+    const [confirmationDialogOpen, setConfirmationDialogOpen] = React.useState(false);
 
     const chatContainerRef = React.useRef(null);
-
+    
+    React.useEffect(() => {
+        // Function to scroll to the bottom of the chat container
+        const scrollToBottom = () => {
+            if (chatContainerRef.current) {
+                chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+            }
+        };
+    
+        // Scroll to the bottom whenever messages change
+        scrollToBottom();
+        }, [messages]
+    );
+    
     const handleSend = async () => {
         if (input.trim() !== "") {
             setInputDisabled(true);
-
-
+    
             setMessages([
                 ...messages,
                 {
@@ -38,36 +58,45 @@ function ChatUI() {
                     timestamp: new Date(),
                 },
             ]);
-
+    
             const newMessage = {
                 id: messages.length + 1,
                 text: input,
                 sender: "user",
                 timestamp: new Date(),
             };
-
+    
             try {
                 setLoading(true);
-
-                const response = await axios.post("https://sure-cheaply-kite.ngrok-free.app/entries/", [
+    
+                const endpoint =
+                    activeEndpoint === "chat"
+                        ? "http://localhost:9001/chat/send"
+                        : "http://localhost:9001/code/send";
+    
+                const response = await axios.post(
+                    endpoint,
+                    [
+                        {
+                            role: "user:",
+                            content: input,
+                            chatID: r,
+                        },
+                    ],
                     {
-                        role: "user:",
-                        content: input,
-                        chatID: r,
-                    },
-                ], {
-                    headers: {
-                        "content-type": "application/json",
-                        "Access-Control-Allow-Credentials": "true",
-                        "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
-                        "Access-Control-Allow-Origin": "*",
-                        "Access-Control-Allow-Headers": "*",
-                    },
-                });
+                        headers: {
+                            "content-type": "application/json",
+                            "Access-Control-Allow-Credentials": "true",
+                            "Access-Control-Allow-Methods":
+                            "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+                            "Access-Control-Allow-Origin": "*",
+                            "Access-Control-Allow-Headers": "*",
+                        },
+                    }
+                );
                 const botResponse = response.data.content;
                 let isCode = /[{[\s]/.test(botResponse);
-
-
+    
                 setMessages([
                     ...messages,
                     newMessage,
@@ -86,9 +115,10 @@ function ChatUI() {
                     ...messages,
                     {
                         id: messages.length + 1,
-                        text: "Error: Could not connect to the backend: " + error,
+                        text:
+                            "Error: Could not connect to the backend: " + error,
                         sender: "bot",
-                        timestamp: new Date()
+                        timestamp: new Date(),
                     },
                 ]);
             } finally {
@@ -97,13 +127,32 @@ function ChatUI() {
             }
         }
     };
-
-    React.useEffect(() => {
-        const chatContainer = chatContainerRef.current;
-        if (chatContainer) {
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+    
+    const handleSwitchEndpoint = (endpoint) => {
+        if (endpoint !== activeEndpoint) {
+            setConfirmationDialogOpen(true);
         }
-    }, [messages]);
+    };
+
+    const handleConfirmSwitch = () => {
+        setConfirmationDialogOpen(false);
+        setActiveEndpoint((prevEndpoint) => {
+            const newEndpoint = prevEndpoint === "chat" ? "code" : "chat";
+            setMessages([
+                {
+                id: 1,
+                text: newEndpoint === "chat" ? "Hello, how can I help you today? 😊" : "Hello, I'm ready to code! What do you need? 🤖",
+                sender: "bot",
+                timestamp: new Date(),
+                },
+            ]);
+        return newEndpoint;
+        });
+    };
+
+    const handleCancelSwitch = () => {
+        setConfirmationDialogOpen(false);
+    };
 
     const handleInputChange = (event) => {
         setInput(event.target.value);
@@ -122,15 +171,13 @@ function ChatUI() {
                             bgcolor: "transparent",
                         }}
                     >
-                        {/* Container to hold the image and text in the same line */}
                         <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
-                            {/* Image */}
                             <img
                                 src="logo.png"
                                 alt="Logo"
                                 style={{ width: "35px", height: "35px", marginRight: "10px" }}
                             />
-                            <Typography variant="h5">Polaris AI Chat Interface</Typography>
+                            <Typography variant="h5">Polaris AI Frontend v1</Typography>
                         </div>
                         <Box
                             ref={chatContainerRef}
@@ -197,10 +244,31 @@ function ChatUI() {
                                     )}
                                 </Grid>
                             </Grid>
+                            <Box>
+                                <Button onClick={() => handleSwitchEndpoint('chat')}>Switch to Chat</Button>
+                                <Button onClick={() => handleSwitchEndpoint('code')}>Switch to Code</Button>
+                            </Box>
                         </Box>
                     </Box>
                 </Card>
             </Grid>
+            {/* Confirmation Dialog */}
+            <Dialog open={confirmationDialogOpen} onClose={handleCancelSwitch}>
+                <DialogTitle>Confirmation</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you sure you want to exit active mode?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCancelSwitch} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleConfirmSwitch} color="primary">
+                        Confirm
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Grid>
     );
 }
@@ -226,24 +294,24 @@ const Message = ({ message }) => {
                 <Avatar sx={{ bgcolor: isBot ? "white" : "grey.300" }}>
                     {isBot ? "AI" : "U"}
                 </Avatar>
-                    <Paper
-                        variant="outlined"
-                        sx={{
-                            p: 1,
-                            ml: isBot ? 1 : 0,
-                            mr: isBot ? 0 : 1,
-                            backgroundColor: isBot ? "white" : "grey.300",
-                            borderRadius: isBot ? "20px 20px 20px 5px" : "20px 20px 5px 20px",
-                            whiteSpace: "pre-wrap",
-                        }}
-                    >
-                        <Typography variant="body2" sx={{ margin: 0 }}>
-                            {message.text}
-                        </Typography>
-                        <Typography variant="caption" color="textSecondary">
-                            {message.timestamp.toLocaleTimeString()}
-                        </Typography>
-                    </Paper>
+                <Paper
+                    variant="outlined"
+                    sx={{
+                        p: 1,
+                        ml: isBot ? 1 : 0,
+                        mr: isBot ? 0 : 1,
+                        backgroundColor: isBot ? "white" : "grey.300",
+                        borderRadius: isBot ? "20px 20px 20px 5px" : "20px 20px 5px 20px",
+                        whiteSpace: "pre-wrap",
+                    }}
+                >
+                    <Typography variant="body2" sx={{ margin: 0 }}>
+                        {message.text}
+                    </Typography>
+                    <Typography variant="caption" color="textSecondary">
+                        {message.timestamp.toLocaleTimeString()}
+                    </Typography>
+                </Paper>
             </Box>
         </Box>
     );
