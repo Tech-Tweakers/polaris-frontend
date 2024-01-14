@@ -71,8 +71,8 @@ function ChatUI() {
     
                 const endpoint =
                     activeEndpoint === "chat"
-                        ? "https://localhost:9001/chat/send"
-                        : "https://localhost:9001/code/send";
+                        ? "http://localhost:9001/chat/send"
+                        : "http://localhost:9001/code/send";
     
                 const response = await axios.post(
                     endpoint,
@@ -177,7 +177,7 @@ function ChatUI() {
                                 alt="Logo"
                                 style={{ width: "35px", height: "35px", marginRight: "10px" }}
                             />
-                            <Typography variant="h5">Polaris AI Chat Interface</Typography>
+                            <Typography variant="h5">Polaris AI Frontend v1</Typography>
                         </div>
                         <Box
                             ref={chatContainerRef}
@@ -257,7 +257,7 @@ function ChatUI() {
                 <DialogTitle>Confirmation</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Are you sure you want to switch to {activeEndpoint === "chat" ? "Code" : "Chat"} mode?
+                        Are you sure you want to exit active mode?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
